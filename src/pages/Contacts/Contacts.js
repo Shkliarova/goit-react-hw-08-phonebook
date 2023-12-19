@@ -1,13 +1,13 @@
-import { selectContacts, selectError, selectIsLoading } from "../../redux/selectors"
-import { ContactForm } from "../ContactForm/ContactForm"
-import { ContactList } from "../ContactList/ContactList"
-import { Filter } from "../Filter/Filter"
-import { AppWrapper } from "./App.styled"
+import { selectContacts, selectError, selectIsLoading } from "../../redux/contacts/selectors"
+import { ContactForm } from "../../components/ContactForm/ContactForm"
+import { ContactList } from "../../components/ContactList/ContactList"
+import { Filter } from "../../components/Filter/Filter"
+import { AppWrapper } from "./Contacts.styled"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react";
-import { fetchContacts } from "../../redux/operations"
+import { fetchContacts } from "../../redux/contacts/operations"
 
-export const App = () => {
+export default function Contacts() {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
