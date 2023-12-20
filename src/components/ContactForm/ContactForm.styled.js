@@ -3,14 +3,23 @@ import {Form, Field, ErrorMessage} from "formik"
 
 export const ContactsForm = styled(Form)`
 display: flex;
-gap: 8px;`
+gap: 4px;
+flex-direction: column;`
 
 export const ContactsField = styled(Field)`
-margin-left: 4px;`
+margin-left: 4px;
+border-color: #1976d2;
+opacity: 50%;
+width: 230px;
+font-size: 18px;
+text-indent: 8px;
+border-radius: 5px;
 
-export const FormButton = styled.button`
-margin-left: 25px;
-height: 24px;`
+&::placeholder{
+    font-size: 18px;
+    text-indent: 8px;
+}`
 
 export const FormError = styled(ErrorMessage)`
-color: red;`
+color: red;
+margin: 0 auto;`
