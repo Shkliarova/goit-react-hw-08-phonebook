@@ -31,9 +31,8 @@ extraReducers: (builder) => {
         state.contacts.isLoading = false;
         state.contacts.error = null;
 
-        const { contacts } = state;
         const { payload } = action;
-        const isDuplicate = contacts.items.some((contact) =>
+        const isDuplicate = state.contacts.items.some((contact) =>
           contact.name.toLowerCase() === payload.name.toLowerCase() &&
           contact.number === payload.number
         );
@@ -43,6 +42,7 @@ extraReducers: (builder) => {
         } else {
           state.contacts.items.push(payload);
         }
+        
       })
       .addCase(addContacts.rejected, (state, action) => {
         state.contacts.isLoading = false;
@@ -54,7 +54,10 @@ extraReducers: (builder) => {
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = null;
-        state.contacts.items = state.contacts.items.filter((item) => item.id !== action.payload);
+        const index = state.contacts.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        state.contacts.items.splice(index, 1);
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
