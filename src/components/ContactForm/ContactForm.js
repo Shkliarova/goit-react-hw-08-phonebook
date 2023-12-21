@@ -1,9 +1,10 @@
 import {Formik} from "formik"
 import * as Yup from 'yup';
 import { ContactsForm, ContactsField, FormError } from "./ContactForm.styled";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addContacts } from "../../redux/contacts/operations";
 import { Button } from "@mui/material";
+import { selectContacts } from "../../redux/contacts/selectors";
 
 const contactSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
@@ -14,6 +15,7 @@ const contactSchema = Yup.object().shape({
 
 export const ContactForm = () => {
     const dispatch = useDispatch();
+    const contacts = useSelector(selectContacts)
 
     return(
         <Formik initialValues={{
@@ -22,8 +24,18 @@ export const ContactForm = () => {
         }}
         validationSchema={contactSchema}
         onSubmit={(values, actions) => {
+            const isDuplicate = contacts.some((contact) =>
+            contact.name.toLowerCase() === values.name.toLowerCase() ||
+            contact.number === values.number
+        );
+
+        if (isDuplicate) {
+          alert('This contact is already in your phonebook!');
+          actions.resetForm();
+        } else{
             dispatch(addContacts(values));
             actions.resetForm();
+        }
         }}>
             <ContactsForm>
                 <div style={{display: "flex", gap: "8px"}}>

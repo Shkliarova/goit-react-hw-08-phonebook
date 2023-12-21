@@ -30,19 +30,7 @@ extraReducers: (builder) => {
       .addCase(addContacts.fulfilled, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = null;
-
-        const { payload } = action;
-        const isDuplicate = state.contacts.items.some((contact) =>
-          contact.name.toLowerCase() === payload.name.toLowerCase() &&
-          contact.number === payload.number
-        );
-
-        if (isDuplicate) {
-          alert('This contact is already in your phonebook!');
-        } else {
-          state.contacts.items.push(payload);
-        }
-        
+        state.contacts.items.push(action.payload);
       })
       .addCase(addContacts.rejected, (state, action) => {
         state.contacts.isLoading = false;
